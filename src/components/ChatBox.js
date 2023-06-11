@@ -7,10 +7,12 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import Message from "./Message";
+import SendMessage from "./SendMessage";
 
 const ChatBox = () => {
     const [messages, setMessages] = useState([]);
-    
+
     useEffect(() => {
         const q = query(
           collection(db, "messages"),
@@ -29,7 +31,12 @@ const ChatBox = () => {
    
     return (
       <main className="chat-box">
-       
+        <div className="messages-wrapper">
+        {messages?.map((message) => (
+          <Message key={message.id} message={message} />
+        ))}
+      </div>
+      <SendMessage />
       </main>
     );
   };
