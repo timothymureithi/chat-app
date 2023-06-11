@@ -12,6 +12,8 @@ import SendMessage from "./SendMessage";
 
 const ChatBox = () => {
     const [messages, setMessages] = useState([]);
+    const scroll = useRef();
+
 
     useEffect(() => {
         const q = query(
@@ -19,6 +21,7 @@ const ChatBox = () => {
           orderBy("createdAt"),
           limit(50)
         );
+        
         const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
           let messages = [];
           QuerySnapshot.forEach((doc) => {
@@ -36,7 +39,8 @@ const ChatBox = () => {
           <Message key={message.id} message={message} />
         ))}
       </div>
-      <SendMessage />
+      <span ref={scroll}></span>
+      <SendMessage scroll={scroll} />
       </main>
     );
   };
